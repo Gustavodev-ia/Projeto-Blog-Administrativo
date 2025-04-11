@@ -2,11 +2,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from '../../styles/Dashboard.module.css'
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 export default function Dashboard() {
   const [titulo, setTitulo] = useState('');
   const [conteudo, setConteudo] = useState('');
   const [posts, setPosts] = useState([]);
+  const router = useRouter()
 
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/posts`).then((res) => setPosts(res.data));
@@ -32,7 +35,10 @@ export default function Dashboard() {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/posts`, { titulo, conteudo }, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      alert('Post criado com sucesso!');
+      toast.success("Post criado com sucesso!")
+      setTitulo("")
+      setConteudo("")
+      router.push("/blog")
     } catch (error) {
       alert('Erro ao criar post',error);
       console.log(error)
