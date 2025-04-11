@@ -3,6 +3,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import styles from '../../styles/Login.module.css'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -11,11 +13,14 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, { email, password });
-      localStorage.setItem('token', res.data.token);
-      router.push('/admin/dashboard');
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, { email, senha });
+      console.log(res.data)
+      localStorage.setItem('token', res.data);
+      
+      toast.success("Login realizado com sucesso!")
+      router.push('/admin/Dashboard');
     } catch (error) {
-      alert('Erro ao fazer login');
+      alert('Erro ao fazer login',error);
     }
   };
 

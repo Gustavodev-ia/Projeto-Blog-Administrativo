@@ -13,14 +13,29 @@ export default function Dashboard() {
   }, []);
 
   const handleCreatePost = async () => {
+
     const token = localStorage.getItem('token');
+  
+
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+  
+      if (!token) {
+        alert("Usuário não autenticado!");
+        return;
+      }
+    }
+
+    
+    
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/posts`, { titulo, conteudo }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert('Post criado com sucesso!');
     } catch (error) {
-      alert('Erro ao criar post');
+      alert('Erro ao criar post',error);
+      console.log(error)
     }
   };
 
@@ -30,13 +45,7 @@ export default function Dashboard() {
       <input type="text" placeholder="Título" value={titulo} onChange={(e) => setTitulo(e.target.value)} className={styles.input} />
       <textarea placeholder="Conteúdo" value={conteudo} onChange={(e) => setConteudo(e.target.value)} className={styles.input}></textarea>
       <button onClick={handleCreatePost} className={styles.button}>Criar Post</button>
-      <h3>Posts</h3>
-      {posts.map((post, index) => (
-        <div key={index} className={styles.post}>
-          <h4>{post.titulo}</h4>
-          <p>{post.conteudo}</p>
-        </div>
-      ))}
+      
     </div>
   );
 }
