@@ -2,10 +2,13 @@ const express = require("express")
 const db = require("./config/database")
 const user = require("./Models/User")
 const app = express()
+const routes = require("./routes/userRoutes")
 
 require("dotenv").config()
 
 app.use(express.json())
+app.use(routes)
+
 
 
 db.sync().then(()=>{

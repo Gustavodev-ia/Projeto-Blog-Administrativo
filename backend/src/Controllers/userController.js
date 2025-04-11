@@ -1,5 +1,6 @@
 const User = require("../Models/User")
 const jwt = require("jsonwebtoken")
+const bycript = require("bcrypt")
 require("dotenv").config()
 
 exports.register = async (req,res) =>{
@@ -21,7 +22,7 @@ exports.login = async (req,res) =>{
 
         const user = await User.findOne({where:{email}})
 
-        if(!user || !(await bcrypt.compare(senha,user.senha))){
+        if(!user || !(await bycript.compare(senha,user.senha))){
             return res.status(401).json({error:"Credenciais invalidas"})
         }
 
