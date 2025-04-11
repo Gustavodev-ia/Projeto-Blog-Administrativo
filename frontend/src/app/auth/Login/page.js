@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import styles from '../../styles/Login.module.css'
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -19,11 +20,13 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
-      <button onClick={handleLogin}>Entrar</button>
+    <div className={styles.container}>
+      <div className={styles.loginBox}>
+        <h2 className={styles.title}>Login</h2>
+        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className={styles.input} />
+        <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} className={styles.input} />
+        <button onClick={handleLogin} className={styles.button}>Entrar</button>
+      </div>
     </div>
   );
 }

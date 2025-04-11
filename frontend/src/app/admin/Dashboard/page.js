@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import styles from '../../styles/Dashboard.module.css'
 
 export default function Dashboard() {
   const [titulo, setTitulo] = useState('');
@@ -24,15 +25,14 @@ export default function Dashboard() {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h2>Dashboard</h2>
-      <input type="text" placeholder="Título" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
-      <textarea placeholder="Conteúdo" value={conteudo} onChange={(e) => setConteudo(e.target.value)}></textarea>
-      <button onClick={handleCreatePost}>Criar Post</button>
-
+      <input type="text" placeholder="Título" value={titulo} onChange={(e) => setTitulo(e.target.value)} className={styles.input} />
+      <textarea placeholder="Conteúdo" value={conteudo} onChange={(e) => setConteudo(e.target.value)} className={styles.input}></textarea>
+      <button onClick={handleCreatePost} className={styles.button}>Criar Post</button>
       <h3>Posts</h3>
-      {posts.map(post => (
-        <div key={post.id}>
+      {posts.map((post, index) => (
+        <div key={index} className={styles.post}>
           <h4>{post.titulo}</h4>
           <p>{post.conteudo}</p>
         </div>
