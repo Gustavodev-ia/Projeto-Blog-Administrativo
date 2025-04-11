@@ -1,6 +1,7 @@
 const express = require("express")
 const db = require("./config/database")
 const user = require("./Models/User")
+const post = require("./Models/Post")
 const app = express()
 const routes = require("./routes/userRoutes")
 
@@ -11,7 +12,7 @@ app.use(routes)
 
 
 
-db.sync().then(()=>{
+db.sync({force:true}).then(()=>{
     console.log("Banco sincronizado!")
 })
 
